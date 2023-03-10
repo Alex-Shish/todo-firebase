@@ -1,18 +1,28 @@
 import db  from "./connectDB";
-import {collection, getDocs} from 'firebase/firestore/lite'
+import {collection, getDocs} from 'firebase/firestore'
+import { useEffect, useState } from "react";
+
 function App() {
-  async function getTasks(db) {
+
+const [task, setTask] = useState([])
+
+  useEffect( () => {
+  const getTasks = async () => {
     const tasksCol = collection(db, 'task');
     const snapshot = await getDocs(tasksCol);
     const taskList = snapshot.docs.map(doc => doc.data());
     return taskList;
   }
-    getTasks().then(r => console.log(r) )
+    getTasks()
+  })
   return (
     <div className="App">
-
+<ul>
+  { task.map(task => )}
+</ul>
     </div>
   );
 }
 
 export default App;
+
